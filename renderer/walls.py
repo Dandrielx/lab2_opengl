@@ -1,5 +1,5 @@
 from OpenGL.GL import *
-from matrices import create_translation_matrix
+from matrices import translation_matrix
 from utils.materials import draw_cuboid
 
 def draw_window_wall():
@@ -10,13 +10,13 @@ def draw_window_wall():
 
     # Parte de baixo da parede
     glPushMatrix()
-    glMultMatrixf(create_translation_matrix(wall_x, window_base_y / 2, 0).T)
+    glMultMatrixf(translation_matrix(wall_x, window_base_y / 2, 0).T)
     draw_cuboid((0.2, window_base_y, 25), wall_color)
     glPopMatrix()
 
     # Parte de cima da parede
     glPushMatrix()
-    glMultMatrixf(create_translation_matrix(wall_x, window_base_y + window_height + (5.0 - window_base_y - window_height) / 2, 0).T)
+    glMultMatrixf(translation_matrix(wall_x, window_base_y + window_height + (5.0 - window_base_y - window_height) / 2, 0).T)
     draw_cuboid((0.2, 5.0 - window_base_y - window_height, 25), wall_color)
     glPopMatrix()
 
@@ -24,7 +24,7 @@ def draw_window_wall():
     pillars = [{'z_pos': -3.0, 'width': 2}, {'z_pos': 4.0, 'width': 2}]
     for p in pillars:
         glPushMatrix()
-        glMultMatrixf(create_translation_matrix(wall_x, window_base_y + window_height / 2, p['z_pos']).T)
+        glMultMatrixf(translation_matrix(wall_x, window_base_y + window_height / 2, p['z_pos']).T)
         draw_cuboid((0.2, window_height, p['width']), wall_color)
         glPopMatrix()
 
@@ -35,7 +35,7 @@ def draw_window_wall():
     windows = [{'z_pos': -7.0, 'width': 4}, {'z_pos': 0.0, 'width': 4}, {'z_pos': 7.0, 'width': 4}]
     for w in windows:
         glPushMatrix()
-        glMultMatrixf(create_translation_matrix(wall_x, window_base_y + window_height / 2, w['z_pos']).T)
+        glMultMatrixf(translation_matrix(wall_x, window_base_y + window_height / 2, w['z_pos']).T)
         draw_cuboid((0.05, window_height, w['width']), glass_color, 100)
         glPopMatrix()
     glDisable(GL_BLEND)
