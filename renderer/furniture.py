@@ -25,7 +25,7 @@ def draw_tables():
             draw_cuboid((0.1, 0.9, 1.2), leg_color)
             glPopMatrix()
 
-            # suporte frontal   
+            # tela  
             glPushMatrix()
             glMultMatrixf(create_translation_matrix(0, 0.5, -0.2).T)
             draw_cuboid((1, 0.8, 0.08), support_color, 128)
