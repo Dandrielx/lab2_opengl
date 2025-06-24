@@ -10,24 +10,26 @@ def draw_tables():
     support_color = (0.05, 0.05, 0.05, 1.0)
 
     for row in range(-8, 10, 4):
-        for col in range(-8, 9, 4):
+        for col in range(-4, 9, 4):
             glPushMatrix()
             glMultMatrixf(create_translation_matrix(col, 1, row).T)
 
             # tampo
             glPushMatrix()
-            draw_tessellated_cuboid((3.5, 0.1, 1.2), table_top_color, 128.0, (5, 1, 5))
+            draw_tessellated_cuboid((4, 0.1, 1.2), table_top_color, 128.0, (5, 1, 5))
             glPopMatrix()
 
             # perna
             glPushMatrix()
             glMultMatrixf(create_translation_matrix(-1.6, -0.5, 0).T)
-            draw_cuboid((0.1, 1, 1.2), leg_color)
+            draw_cuboid((0.1, 0.9, 1.2), leg_color)
             glPopMatrix()
 
-            # suporte frontal
+            # suporte frontal   
             glPushMatrix()
             glMultMatrixf(create_translation_matrix(0, 0.5, -0.2).T)
+            draw_cuboid((1, 0.8, 0.08), support_color, 128)
+            glMultMatrixf(create_translation_matrix(0, 0.25, -0.08).T)
             draw_cuboid((1, 0.8, 0.1), support_color, 128)
             glPopMatrix()
 
@@ -49,4 +51,5 @@ def draw_board():
         glVertex3f(px, py, 0.06)
 
     glEnd()
+    glEnable(GL_LIGHTING)
     glPopMatrix()

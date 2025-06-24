@@ -50,7 +50,8 @@ def draw_scene(camera, projection_mode):
     glPushMatrix()
     glMultMatrixf(create_translation_matrix(0, -0.05, 0).T)
     draw_tessellated_cuboid((20, 0.1, 25), floor_color, 32.0, (5, 1, 5))
-
+    glPopMatrix()
+    
     # Parede do fundo
     wall_color = (0.9, 0.9, 0.85, 1.0)
     glPushMatrix()
