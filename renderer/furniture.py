@@ -1,5 +1,5 @@
 from OpenGL.GL import *
-from matrices import create_translation_matrix
+from matrices import translation_matrix
 from renderer.tessellation import draw_tessellated_cuboid
 from utils.materials import draw_cuboid
 from utils.raster import bresenham_line
@@ -12,7 +12,7 @@ def draw_tables():
     for row in range(-8, 10, 4):
         for col in range(-4, 9, 4):
             glPushMatrix()
-            glMultMatrixf(create_translation_matrix(col, 1, row).T)
+            glMultMatrixf(translation_matrix(col, 1, row).T)
 
             # tampo
             glPushMatrix()
@@ -21,22 +21,22 @@ def draw_tables():
 
             # perna
             glPushMatrix()
-            glMultMatrixf(create_translation_matrix(-1.6, -0.5, 0).T)
+            glMultMatrixf(translation_matrix(-1.6, -0.5, 0).T)
             draw_cuboid((0.1, 0.9, 1.2), leg_color)
             glPopMatrix()
 
             # monitor 
             glPushMatrix()
-            glMultMatrixf(create_translation_matrix(0, 0.5, -0.2).T) # tela
+            glMultMatrixf(translation_matrix(0, 0.5, -0.2).T) # tela
             draw_cuboid((1.2, 0.8, 0.05), support_color, 128)
             
-            glMultMatrixf(create_translation_matrix(0, 0, -0.08).T) # tubo do monitor
+            glMultMatrixf(translation_matrix(0, 0, -0.08).T) # tubo do monitor
             draw_cuboid((0.5, 0.3, 0.15), support_color, 128)
             
-            glMultMatrixf(create_translation_matrix(0, -0.08, -0.12).T) # perna do monitor
+            glMultMatrixf(translation_matrix(0, -0.08, -0.12).T) # perna do monitor
             draw_cuboid((0.2, 0.8, 0.1), support_color, 128)
             
-            glMultMatrixf(create_translation_matrix(0, -0.35, 0.1).T) # pé do monitor
+            glMultMatrixf(translation_matrix(0, -0.35, 0.1).T) # pé do monitor
             draw_cuboid((0.8, 0.02, 0.5), support_color, 128)
             
             glPopMatrix()
@@ -45,7 +45,7 @@ def draw_tables():
 
 def draw_board():
     glPushMatrix()
-    glMultMatrixf(create_translation_matrix(0, 2.5, -12.4).T)
+    glMultMatrixf(translation_matrix(0, 2.5, -12.4).T)
     draw_cuboid((4, 2, 0.1), (1, 1, 1, 1), 10)
 
     glDisable(GL_LIGHTING)
