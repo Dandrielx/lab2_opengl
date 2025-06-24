@@ -1,0 +1,89 @@
+from OpenGL.GL import *
+from matrices import create_translation_matrix
+from renderer.tessellation import draw_tessellated_cuboid
+from utils.materials import draw_cuboid, draw_elliptical_cylinder   
+from utils.raster import bresenham_line
+
+def draw_tables():
+    table_top_color = (0.8, 0.1, 0.1, 1.0)
+    leg_color = (0.1, 0.1, 0.1, 1.0)
+    support_color = (0.05, 0.05, 0.05, 1.0)
+
+    for row in range(-8, 10, 4):
+        for col in range(-4, 9, 4):
+            glPushMatrix()
+            glMultMatrixf(create_translation_matrix(col, 1, row).T)
+
+            # tampo
+            glPushMatrix()
+            draw_tessellated_cuboid((4, 0.1, 1.2), table_top_color, 128.0, (5, 1, 5))
+            glPopMatrix()
+
+            # perna
+            glPushMatrix()
+            glMultMatrixf(create_translation_matrix(-1.6, -0.5, 0).T)
+            draw_cuboid((0.1, 0.9, 1.2), leg_color)
+            glPopMatrix()
+
+            # tela  
+            glPushMatrix()
+            glMultMatrixf(create_translation_matrix(0, 0.5, -0.2).T)
+            draw_cuboid((1, 0.8, 0.08), support_color, 128)
+            glMultMatrixf(create_translation_matrix(0, 0.25, -0.08).T)
+            draw_cuboid((1, 0.8, 0.1), support_color, 128)
+            glPopMatrix()
+
+            glPopMatrix()
+
+def draw_board():
+    glPushMatrix()
+    glMultMatrixf(create_translation_matrix(0, 2.5, -12.4).T)
+    draw_cuboid((4, 2, 0.1), (1, 1, 1, 1), 10)
+
+    glDisable(GL_LIGHTING)
+    glColor3f(0.1, 0.1, 0.1)
+    glPointSize(3.0)
+    glBegin(GL_POINTS)
+
+    for p in bresenham_line(0, 0, 100, 80):
+        px = -1.9 + (p[0] / 100.0) * 3.8
+        py = -0.9 + (p[1] / 80.0) * 1.8
+        glVertex3f(px, py, 0.06)
+
+    glEnd()
+    glEnable(GL_LIGHTING)
+    glPopMatrix()
+
+
+def draw_chair():
+    seat_color = (0.1, 0.1, 0.1, 1.0)
+    support_color = (0 , 0, 0, 1.0)
+
+    # Assento elíptico (horizontal)
+    glPushMatrix()
+    glMultMatrixf(create_translation_matrix(0, 0.5, 0).T)
+    draw_elliptical_cylinder(a=0.8, b=0.5, height=0.1, color=seat_color)
+    glPopMatrix()
+
+    # Encosto elíptico (vertical, atrás)
+    glPushMatrix()
+    glMultMatrixf(create_translation_matrix(0, 1.3, -0.45).T)
+    glRotatef(90, 1, 0, 0)  # Rotaciona para ficar "em pé"
+    draw_elliptical_cylinder(a=0.8, b=0.35, height=0.08, color=seat_color)
+    glPopMatrix()
+
+
+    # Suporte cadeira
+    for x in [-0.33, 0.33]:
+        glPushMatrix()
+        glMultMatrixf(create_translation_matrix(x, 0.5, -0.4).T)
+        draw_elliptical_cylinder(a=0.03, b=0.03, height=0.5, color=support_color)
+        glPopMatrix()
+    # Pernas da cadeira
+    for x in [-0.3, 0.3]:
+        for z in [-0.3, 0.3]:
+            glPushMatrix()
+            glMultMatrixf(create_translation_matrix(x, -0.0, z).T)
+            draw_elliptical_cylinder(a=0.07, b=0.07, height=0.5, color=support_color)
+            
+            glPopMatrix()
