@@ -6,7 +6,7 @@ from renderer.scene import draw_scene
 
 def main():
     pygame.init()
-    display = (800, 600)
+    display = (1600, 900)
     pygame.display.set_mode(display, DOUBLEBUF | OPENGL)
     pygame.display.set_caption("Simulação de Sala")
     pygame.mouse.set_visible(False)

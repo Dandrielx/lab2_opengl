@@ -25,12 +25,20 @@ def draw_tables():
             draw_cuboid((0.1, 0.9, 1.2), leg_color)
             glPopMatrix()
 
-            # tela  
+            # monitor 
             glPushMatrix()
-            glMultMatrixf(create_translation_matrix(0, 0.5, -0.2).T)
-            draw_cuboid((1, 0.8, 0.08), support_color, 128)
-            glMultMatrixf(create_translation_matrix(0, 0.25, -0.08).T)
-            draw_cuboid((1, 0.8, 0.1), support_color, 128)
+            glMultMatrixf(create_translation_matrix(0, 0.5, -0.2).T) # tela
+            draw_cuboid((1.2, 0.8, 0.05), support_color, 128)
+            
+            glMultMatrixf(create_translation_matrix(0, 0, -0.08).T) # tubo do monitor
+            draw_cuboid((0.5, 0.3, 0.15), support_color, 128)
+            
+            glMultMatrixf(create_translation_matrix(0, -0.08, -0.12).T) # perna do monitor
+            draw_cuboid((0.2, 0.8, 0.1), support_color, 128)
+            
+            glMultMatrixf(create_translation_matrix(0, -0.35, 0.1).T) # pé do monitor
+            draw_cuboid((0.8, 0.02, 0.5), support_color, 128)
+            
             glPopMatrix()
 
             glPopMatrix()
