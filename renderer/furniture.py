@@ -1,7 +1,7 @@
 from OpenGL.GL import *
 from matrices import translation_matrix
 from renderer.tessellation import draw_tessellated_cuboid
-from utils.materials import draw_cuboid
+from utils.materials import draw_cuboid, draw_elliptical_cylinder
 from utils.raster import bresenham_line
 
 def draw_tables():
@@ -61,3 +61,36 @@ def draw_board():
     glEnd()
     glEnable(GL_LIGHTING)
     glPopMatrix()
+
+def draw_chair():
+    seat_color = (0.1, 0.1, 0.1, 1.0)
+    support_color = (0 , 0, 0, 1.0)
+
+    # Assento elíptico (horizontal)
+    glPushMatrix()
+    glMultMatrixf(translation_matrix(0, 0.5, 0).T)
+    draw_elliptical_cylinder(a=0.8, b=0.5, height=0.1, color=seat_color)
+    glPopMatrix()
+
+    # Encosto elíptico (vertical, atrás)
+    glPushMatrix()
+    glMultMatrixf(translation_matrix(0, 1.3, -0.45).T)
+    glRotatef(90, 1, 0, 0)  # Rotaciona para ficar "em pé"
+    draw_elliptical_cylinder(a=0.8, b=0.35, height=0.08, color=seat_color)
+    glPopMatrix()
+
+
+    # Suporte cadeira
+    for x in [-0.33, 0.33]:
+        glPushMatrix()
+        glMultMatrixf(translation_matrix(x, 0.5, -0.4).T)
+        draw_elliptical_cylinder(a=0.03, b=0.03, height=0.5, color=support_color)
+        glPopMatrix()
+    # Pernas da cadeira
+    for x in [-0.3, 0.3]:
+        for z in [-0.3, 0.3]:
+            glPushMatrix()
+            glMultMatrixf(translation_matrix(x, -0.0, z).T)
+            draw_elliptical_cylinder(a=0.07, b=0.07, height=0.5, color=support_color)
+            
+            glPopMatrix()

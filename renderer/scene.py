@@ -1,12 +1,15 @@
 from OpenGL.GL import *
 from matrices import (
+    rotation_x,
+    rotation_y,
+    rotation_z,
     translation_matrix,
     perspective_matrix,
     orthographic_matrix,
 )
 from renderer.tessellation import draw_tessellated_cuboid
 from renderer.walls import draw_window_wall
-from renderer.furniture import draw_tables, draw_board
+from renderer.furniture import draw_tables, draw_board, draw_chair
 from utils.materials import draw_cuboid
 
 
@@ -77,6 +80,14 @@ def draw_scene(camera, projection_mode):
 
     # Mesas
     draw_tables()
+
+    for row in range(-4, 12, 4):
+        for col in range(-4, 16, 4):
+            glPushMatrix()
+            glMultMatrixf(translation_matrix(row, 0, col-2.5).T)
+            glMultMatrixf(rotation_y(180).T)
+            draw_chair()
+            glPopMatrix()
 
     # Quadro branco com linha
     draw_board()
