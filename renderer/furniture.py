@@ -1,47 +1,159 @@
 from OpenGL.GL import *
-from matrices import translation_matrix
+from matrices import translation_matrix, rotation_y
 from renderer.tessellation import draw_tessellated_cuboid
-from utils.materials import draw_cuboid, draw_elliptical_cylinder
+from utils.materials import draw_cuboid, draw_elliptical_cylinder, set_material, draw_tampo
 from utils.raster import bresenham_line
+import numpy as np
 
 def draw_tables():
     table_top_color = (0.8, 0.1, 0.1, 1.0)
+    # Cor um pouco mais escura para o suporte do teclado, para diferenciar
+    keyboard_tray_color = (0.6, 0.1, 0.1, 1.0) 
     leg_color = (0.1, 0.1, 0.1, 1.0)
     support_color = (0.05, 0.05, 0.05, 1.0)
 
     for row in range(-8, 10, 4):
-        for col in range(-4, 9, 4):
+        for col in np.arange(-6, 0, 6):
             glPushMatrix()
-            glMultMatrixf(translation_matrix(col, 1, row).T)
+            glMultMatrixf(translation_matrix(6.9, 1, row).T)
 
-            # tampo
+            # --- TAMPO DA MESA ---
             glPushMatrix()
-            draw_tessellated_cuboid((4, 0.1, 1.2), table_top_color, 128.0, (5, 1, 5))
+            final_mat = np.dot(translation_matrix(0, 0.18, 0), rotation_y(180))
+            glMultMatrixf(final_mat.T)
+            set_material([c*0.4 for c in table_top_color[:3]], table_top_color, [1,1,1,1], 128.0)
+            draw_tampo(width=6.1, height=0.065, depth=1.2, corner_radius=0.3, segments=15)
             glPopMatrix()
-
-            # perna
-            glPushMatrix()
-            glMultMatrixf(translation_matrix(-1.6, -0.5, 0).T)
-            draw_cuboid((0.1, 0.9, 1.2), leg_color)
-            glPopMatrix()
-
-            # monitor 
-            glPushMatrix()
-            glMultMatrixf(translation_matrix(0, 0.5, -0.2).T) # tela
-            draw_cuboid((1.2, 0.8, 0.05), support_color, 128)
             
-            glMultMatrixf(translation_matrix(0, 0, -0.08).T) # tubo do monitor
+            # --- SUPORTE DO TECLADO ---
+            glPushMatrix()
+            glMultMatrixf(rotation_y(180).T)
+            final_mat = np.dot(translation_matrix(0, -0.2, -0.5), rotation_y(180))
+            glMultMatrixf(final_mat.T)
+            
+            set_material([c*0.4 for c in keyboard_tray_color[:3]], keyboard_tray_color, [1,1,1,1], 128.0)
+            draw_tampo(width=6.1, height=0.065, depth=1.2, corner_radius=0.3, segments=15)
+            glPopMatrix()
+
+
+            # --- PERNA DA MESA ---
+            for pos in np.arange(-3, 3+0.1, 2):
+                glPushMatrix()
+                glMultMatrixf(translation_matrix(pos, -0.6, 0.15).T)
+                draw_cuboid((0.08, 0.8, 1), leg_color)
+                glPopMatrix()
+
+                glPushMatrix()
+                glMultMatrixf(translation_matrix(pos, -0.04, -0.2).T)
+                draw_cuboid((0.08, 0.38, 0.3), leg_color)
+                glPopMatrix()
+
+            glPushMatrix()
+            final_mat = np.dot(translation_matrix(0, -0.1, -0.35), rotation_y(90))
+            glMultMatrixf(final_mat.T)
+            draw_cuboid((0.06, 0.5, 6.08), leg_color)
+            glPopMatrix()
+
+            # --- MONITOR ---
+            glPushMatrix()
+            glMultMatrixf(translation_matrix(-1.95, 0.75, 0.3).T)
+            draw_cuboid((1, 0.6, 0.05), support_color, 128)
+                
+            glMultMatrixf(translation_matrix(0, 0, -0.08).T)
             draw_cuboid((0.5, 0.3, 0.15), support_color, 128)
-            
-            glMultMatrixf(translation_matrix(0, -0.08, -0.12).T) # perna do monitor
+                
+            glMultMatrixf(translation_matrix(0, -0.08, -0.12).T)
             draw_cuboid((0.2, 0.8, 0.1), support_color, 128)
-            
-            glMultMatrixf(translation_matrix(0, -0.35, 0.1).T) # pé do monitor
+                
+            glMultMatrixf(translation_matrix(0, -0.4, 0.1).T)
             draw_cuboid((0.8, 0.02, 0.5), support_color, 128)
-            
+            glPopMatrix()
+
+            glPushMatrix()
+            glMultMatrixf(translation_matrix(1.95, 0.75, 0.3).T)
+            draw_cuboid((1, 0.6, 0.05), support_color, 128)
+                
+            glMultMatrixf(translation_matrix(0, 0, -0.08).T)
+            draw_cuboid((0.5, 0.3, 0.15), support_color, 128)
+                
+            glMultMatrixf(translation_matrix(0, -0.08, -0.12).T)
+            draw_cuboid((0.2, 0.8, 0.1), support_color, 128)
+                
+            glMultMatrixf(translation_matrix(0, -0.4, 0.1).T)
+            draw_cuboid((0.8, 0.02, 0.5), support_color, 128)
             glPopMatrix()
 
             glPopMatrix()
+
+        for col in np.arange(-6, 0, 6):
+            glPushMatrix()
+            glMultMatrixf(translation_matrix(2, 1, row).T)
+
+            # --- TAMPO DA MESA (PRINCIPAL) ---
+            glPushMatrix()
+            final_mat = np.dot(translation_matrix(-0.25, 0.18, 0), rotation_y(180))
+            glMultMatrixf(final_mat.T)
+            set_material([c*0.4 for c in table_top_color[:3]], table_top_color, [1,1,1,1], 128.0)
+            draw_tampo(width=4.1, height=0.065, depth=1.2, corner_radius=0.3, segments=15)
+            glPopMatrix()
+            
+            # --- SUPORTE DO TECLADO ---
+            glPushMatrix()
+            glMultMatrixf(rotation_y(180).T)
+            final_mat = np.dot(translation_matrix(0.25, -0.2, -0.5), rotation_y(180))
+            glMultMatrixf(final_mat.T)
+            
+            set_material([c*0.4 for c in keyboard_tray_color[:3]], keyboard_tray_color, [1,1,1,1], 128.0)
+            draw_tampo(width=4.1, height=0.065, depth=1.2, corner_radius=0.3, segments=15)
+            glPopMatrix()
+
+
+            # --- PERNA DA MESA ---
+            for pos in np.arange(-2.05, 2.05+0.1, 2.05):
+                if pos == 2.05:
+                    glPushMatrix()
+                    glMultMatrixf(translation_matrix(pos-0.3, -0.6, 0.15).T)
+                    draw_cuboid((0.08, 0.8, 1), leg_color)
+                    glPopMatrix()
+
+                    glPushMatrix()
+                    glMultMatrixf(translation_matrix(pos-0.3, -0.04, -0.2).T)
+                    draw_cuboid((0.08, 0.38, 0.3), leg_color)
+                    glPopMatrix()
+                else:
+                    glPushMatrix()
+                    glMultMatrixf(translation_matrix(pos-0.2, -0.6, 0.15).T)
+                    draw_cuboid((0.08, 0.8, 1), leg_color)
+                    glPopMatrix()
+
+                    glPushMatrix()
+                    glMultMatrixf(translation_matrix(pos-0.2, -0.04, -0.2).T)
+                    draw_cuboid((0.08, 0.38, 0.3), leg_color)
+                    glPopMatrix()
+
+            glPushMatrix()
+            final_mat = np.dot(translation_matrix(-0.25, -0.1, -0.35), rotation_y(90))
+            glMultMatrixf(final_mat.T)
+            draw_cuboid((0.06, 0.5, 4.05), leg_color)
+            glPopMatrix()
+
+            # --- MONITOR ---
+            glPushMatrix()
+            glMultMatrixf(translation_matrix(-1.2, 0.75, 0.3).T)
+            draw_cuboid((1, 0.6, 0.05), support_color, 128)
+                
+            glMultMatrixf(translation_matrix(0, 0, -0.08).T)
+            draw_cuboid((0.5, 0.3, 0.15), support_color, 128)
+                
+            glMultMatrixf(translation_matrix(0, -0.08, -0.12).T)
+            draw_cuboid((0.2, 0.8, 0.1), support_color, 128)
+                
+            glMultMatrixf(translation_matrix(0, -0.4, 0.1).T)
+            draw_cuboid((0.8, 0.02, 0.5), support_color, 128)
+            glPopMatrix()
+
+            glPopMatrix()
+        
 
 def draw_board():
     glPushMatrix()
