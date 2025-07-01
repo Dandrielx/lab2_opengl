@@ -10,7 +10,7 @@ from matrices import (
 from renderer.tessellation import draw_tessellated_cuboid
 from renderer.walls import draw_window_wall
 from renderer.furniture import draw_tables, draw_board, draw_chair
-from utils.materials import draw_cuboid
+from utils.materials import draw_cuboid, draw_elliptical_cylinder
 
 
 def draw_scene(camera, projection_mode):
@@ -75,6 +75,34 @@ def draw_scene(camera, projection_mode):
     draw_tessellated_cuboid((13, 0.1, 25), ceiling_color, 10.0, (5, 1, 5))
     glPopMatrix()
 
+
+    wall_color = (0.9, 0.9, 0.85, 1.0)
+    glPushMatrix()
+    glMultMatrixf(translation_matrix(2, 2.5, 12.5).T)
+    draw_cuboid((10, 5, 0.1), wall_color)
+    glPopMatrix()
+
+    wall_color = (0.9, 0.9, 0.85, 1.0)
+    glPushMatrix()
+    glMultMatrixf(translation_matrix(9.5, 2.5, 12.5).T)
+    draw_cuboid((1, 5, 0.1), wall_color)
+    glPopMatrix()
+
+    wall_color = (0.9, 0.9, 0.85, 1.0)
+    glPushMatrix()
+    glMultMatrixf(translation_matrix(8, 4.25, 12.5).T)
+    draw_cuboid((2, 1.5, 0.1), wall_color)
+    glPopMatrix()
+
+    # --- PORTA ---
+
+    wall_color = (0.9, 0.9, 0.85, 1.0)
+    glPushMatrix()
+    glMultMatrixf(translation_matrix(8.25, 1.75, 11.8).T)
+    glMultMatrixf(rotation_y(45))
+    draw_cuboid((2, 3.5, 0.1), wall_color)
+    glPopMatrix()
+
     # Parede com janelas
     draw_window_wall()
 
@@ -83,3 +111,20 @@ def draw_scene(camera, projection_mode):
 
     # Quadro branco com linha
     draw_board()
+
+    glPushMatrix()
+    glMultMatrixf(translation_matrix(3.5, 3.75, -12.3).T)
+    draw_cuboid((5.25, 0.25, 0.1), color=(0.05, 0.05, 0.05, 1.0))
+    glPopMatrix()
+
+    glPushMatrix()
+    glMultMatrixf(translation_matrix(-1.5, 4, -12.3).T)
+    glMultMatrixf(rotation_z(90))
+    draw_elliptical_cylinder(a=0.7/2, b=0.8/2, height=2, color=floor_color)
+    glPopMatrix()
+
+    glPushMatrix()
+    glMultMatrixf(translation_matrix(6.5, 4, -12.3).T)
+    glMultMatrixf(rotation_z(90))
+    draw_elliptical_cylinder(a=0.7/2, b=0.8/2, height=2, color=floor_color)
+    glPopMatrix()

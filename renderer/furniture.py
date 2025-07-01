@@ -1,5 +1,5 @@
 from OpenGL.GL import *
-from matrices import translation_matrix, rotation_y
+from matrices import translation_matrix, rotation_x, rotation_y, rotation_z
 from renderer.tessellation import draw_tessellated_cuboid
 from utils.materials import draw_cuboid, draw_elliptical_cylinder, set_material, draw_tampo
 from utils.raster import bresenham_line
@@ -7,7 +7,6 @@ import numpy as np
 
 def draw_tables():
     table_top_color = (0.8, 0.1, 0.1, 1.0)
-    # Cor um pouco mais escura para o suporte do teclado, para diferenciar
     keyboard_tray_color = (0.6, 0.1, 0.1, 1.0) 
     leg_color = (0.1, 0.1, 0.1, 1.0)
     support_color = (0.05, 0.05, 0.05, 1.0)
@@ -59,7 +58,7 @@ def draw_tables():
 
             # --- MONITOR ---
             glPushMatrix()
-            glMultMatrixf(translation_matrix(-1.95, 0.75, 0.3).T)
+            glMultMatrixf(translation_matrix(-1.95, 0.7, 0.3).T)
             draw_cuboid((1, 0.6, 0.05), support_color, 128)
                 
             glMultMatrixf(translation_matrix(0, 0, -0.08).T)
@@ -72,8 +71,15 @@ def draw_tables():
             draw_cuboid((0.8, 0.02, 0.5), support_color, 128)
             glPopMatrix()
 
+            # --- PC ---
             glPushMatrix()
-            glMultMatrixf(translation_matrix(1.95, 0.75, 0.3).T)
+            glMultMatrixf(translation_matrix(-1.95, -0.05 , 0.5).T)
+            draw_cuboid((1, 0.3, 0.7), support_color, 128)
+            glPopMatrix()
+
+            # --- MONITOR ---
+            glPushMatrix()
+            glMultMatrixf(translation_matrix(1.95, 0.7, 0.3).T)
             draw_cuboid((1, 0.6, 0.05), support_color, 128)
                 
             glMultMatrixf(translation_matrix(0, 0, -0.08).T)
@@ -84,6 +90,12 @@ def draw_tables():
                 
             glMultMatrixf(translation_matrix(0, -0.4, 0.1).T)
             draw_cuboid((0.8, 0.02, 0.5), support_color, 128)
+            glPopMatrix()
+
+            # --- PC ---
+            glPushMatrix()
+            glMultMatrixf(translation_matrix(1.95, -0.05 , 0.5).T)
+            draw_cuboid((1, 0.3, 0.7), support_color, 128)
             glPopMatrix()
 
             glPopMatrix()
@@ -144,7 +156,7 @@ def draw_tables():
 
             # --- MONITOR ---
             glPushMatrix()
-            glMultMatrixf(translation_matrix(-1.2, 0.75, 0.3).T)
+            glMultMatrixf(translation_matrix(-1.2, 0.7, 0.3).T)
             draw_cuboid((1, 0.6, 0.05), support_color, 128)
                 
             glMultMatrixf(translation_matrix(0, 0, -0.08).T)
@@ -157,13 +169,18 @@ def draw_tables():
             draw_cuboid((0.8, 0.02, 0.5), support_color, 128)
             glPopMatrix()
 
+            glPushMatrix()
+            glMultMatrixf(translation_matrix(-1.2, -0.05 , 0.5).T)
+            draw_cuboid((1, 0.3, 0.7), support_color, 128)
+            glPopMatrix()
+
             glPopMatrix()
         
 
 def draw_board():
     glPushMatrix()
-    glMultMatrixf(translation_matrix(3.5, 2.5, -12.4).T)
-    draw_cuboid((5.5, 4, 0.1), (1, 1, 1, 1), 10)
+    glMultMatrixf(translation_matrix(3.5, 2, -12.4).T)
+    draw_cuboid((5, 3.5, 0.1), (1, 1, 1, 1), 10)
 
     glDisable(GL_LIGHTING)
     glColor3f(0.1, 0.1, 0.1)
@@ -191,8 +208,8 @@ def draw_chair(pos_x = 0, pos_y = 0, pos_z = 0):
 
     # Encosto elíptico (vertical, atrás)
     glPushMatrix()
-    glMultMatrixf(translation_matrix(0 + pos_x, 1.1 + pos_y, 0.4 + pos_z - 0.17).T)
-    glRotatef(90, 1, 0, 0)  # Rotaciona para ficar "em pé"
+    glMultMatrixf(translation_matrix(0 + pos_x, 1.1 + pos_y, 0.3 + pos_z).T)
+    glMultMatrixf(rotation_x(90))
     draw_elliptical_cylinder(a=0.6/2, b=0.7/2, height=0.08, color=seat_color)
     glPopMatrix()
 
@@ -200,9 +217,10 @@ def draw_chair(pos_x = 0, pos_y = 0, pos_z = 0):
     # Suporte cadeira
     for x in [-0.2, 0.2]:
         glPushMatrix()
-        glMultMatrixf(translation_matrix(x + pos_x, 0.5 + pos_y, 0.4 + pos_z - 0.13).T)
+        glMultMatrixf(translation_matrix(x + pos_x, 0.5 + pos_y, 0.25 + pos_z).T)
         draw_elliptical_cylinder(a=0.03, b=0.03, height=0.5, color=support_color)
         glPopMatrix()
+        
     # Pernas da cadeira
     for x in [-0.2, 0.2]:
         for z in [-0.2, 0.2]:
