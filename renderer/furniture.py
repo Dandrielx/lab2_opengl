@@ -6,9 +6,9 @@ from utils.raster import bresenham_line
 import numpy as np
 
 def draw_tables():
-    table_top_color = (0.8, 0.1, 0.1, 1.0)
-    keyboard_tray_color = (0.6, 0.1, 0.1, 1.0) 
-    leg_color = (0.1, 0.1, 0.1, 1.0)
+    table_color = (1, 0.35, 0.35, 1.0)
+    leg_color = (0.5, 0.45, 0.35, 1.0)
+    lights_color = (0.75, 0.75, 0.75, 1.0)
     support_color = (0.05, 0.05, 0.05, 1.0)
 
     for row in range(-8, 10, 4):
@@ -20,7 +20,7 @@ def draw_tables():
             glPushMatrix()
             final_mat = np.dot(translation_matrix(0, 0.18, 0), rotation_y(180))
             glMultMatrixf(final_mat.T)
-            set_material([c*0.4 for c in table_top_color[:3]], table_top_color, [1,1,1,1], 128.0)
+            set_material([c*0.4 for c in table_color[:3]], table_color, [1,1,1,1], 128.0)
             draw_tampo(width=6.1, height=0.065, depth=1.2, corner_radius=0.3, segments=15)
             glPopMatrix()
             
@@ -30,10 +30,17 @@ def draw_tables():
             final_mat = np.dot(translation_matrix(0, -0.2, -0.5), rotation_y(180))
             glMultMatrixf(final_mat.T)
             
-            set_material([c*0.4 for c in keyboard_tray_color[:3]], keyboard_tray_color, [1,1,1,1], 128.0)
+            set_material([c*0.4 for c in table_color[:3]], table_color, [1,1,1,1], 128.0)
             draw_tampo(width=6.1, height=0.065, depth=1.2, corner_radius=0.3, segments=15)
             glPopMatrix()
 
+
+            # --- LUZ TETO ---
+            for pos in np.arange(-3.7, 3.7+0.1, 3.7):
+                glPushMatrix()
+                glMultMatrixf(translation_matrix(pos-3.7, 3.95, 0).T)
+                draw_cuboid((2.5, 0.2, 0.5), lights_color, shininess=128.0)
+                glPopMatrix()
 
             # --- PERNA DA MESA ---
             for pos in np.arange(-3, 3+0.1, 2):
@@ -108,7 +115,7 @@ def draw_tables():
             glPushMatrix()
             final_mat = np.dot(translation_matrix(-0.25, 0.18, 0), rotation_y(180))
             glMultMatrixf(final_mat.T)
-            set_material([c*0.4 for c in table_top_color[:3]], table_top_color, [1,1,1,1], 128.0)
+            set_material([c*0.4 for c in table_color[:3]], table_color, [1,1,1,1], 128.0)
             draw_tampo(width=4.1, height=0.065, depth=1.2, corner_radius=0.3, segments=15)
             glPopMatrix()
             
@@ -118,7 +125,7 @@ def draw_tables():
             final_mat = np.dot(translation_matrix(0.25, -0.2, -0.5), rotation_y(180))
             glMultMatrixf(final_mat.T)
             
-            set_material([c*0.4 for c in keyboard_tray_color[:3]], keyboard_tray_color, [1,1,1,1], 128.0)
+            set_material([c*0.4 for c in table_color[:3]], table_color, [1,1,1,1], 128.0)
             draw_tampo(width=4.1, height=0.065, depth=1.2, corner_radius=0.3, segments=15)
             glPopMatrix()
 

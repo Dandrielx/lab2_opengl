@@ -21,7 +21,7 @@ def draw_window_wall():
     glPopMatrix()
 
     # Pilares entre as janelas
-    pillars = [{'z_pos': -3.0, 'width': 2}, {'z_pos': 4.0, 'width': 2}]
+    pillars = [{'z_pos': -3.0, 'width': 2}, {'z_pos': 4.0, 'width': 2}, {'z_pos': -11.5, 'width': 2}, {'z_pos': 11.5, 'width': 2}]
     for p in pillars:
         glPushMatrix()
         glMultMatrixf(translation_matrix(wall_x, window_base_y + window_height / 2, p['z_pos']).T)

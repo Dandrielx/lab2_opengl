@@ -2,7 +2,6 @@ from OpenGL.GL import *
 from utils.materials import set_material
 from matrices import translation_matrix, rotation_x, rotation_y, rotation_z
 import numpy as np
-#from renderer.tessellation import draw_tessellated_quad
 
 def draw_tessellated_quad(width, height, divs_x, divs_y):
     start_x, start_y = -width / 2, -height / 2

@@ -96,12 +96,10 @@ def draw_cuboid(size, color, shininess=32.0):
             glVertex3fv(vertices[vertex_index])
     glEnd()
 
-def draw_elliptical_cylinder(a, b, height, slices=36, color=(0.5, 0.5, 0.9, 1.0), shininess=32.0): # Add shininess parameter
-    """Desenha uma elipse em pé (cilindro elíptico vertical ou horizontal)."""
-    
-    # Calculate ambient color similar to draw_cuboid
-    ambient_color = [c * 0.4 for c in color[:3]] + [color[3]] if len(color) == 4 else [c * 0.4 for c in color]
-    set_material(ambient_color, color, [1, 1, 1, 1], shininess) # Set material properties
+def draw_elliptical_cylinder(a, b, height, slices=36, color=(0.5, 0.5, 0.9, 1.0),
+                              specular=(0.2, 0.2, 0.2, 1.0), shininess=8.0):
+    ambient_color = [c * 0.4 for c in color[:3]] + [color[3]]
+    set_material(ambient_color, color, specular, shininess) # Set material properties
 
     # Side faces
     glBegin(GL_QUAD_STRIP)
