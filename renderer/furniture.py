@@ -186,28 +186,27 @@ def draw_chair(pos_x = 0, pos_y = 0, pos_z = 0):
     # Assento elíptico (horizontal)
     glPushMatrix()
     glMultMatrixf(translation_matrix(0 + pos_x, 0.5 + pos_y, 0 + pos_z).T)
-    draw_elliptical_cylinder(a=0.8, b=0.5, height=0.1, color=seat_color)
+    draw_elliptical_cylinder(a=0.7/2, b=0.8/2, height=0.1, color=seat_color)
     glPopMatrix()
 
     # Encosto elíptico (vertical, atrás)
     glPushMatrix()
-    glMultMatrixf(translation_matrix(0 + pos_x, 1.3 + pos_y, 0.4 + pos_z).T)
+    glMultMatrixf(translation_matrix(0 + pos_x, 1.1 + pos_y, 0.4 + pos_z - 0.17).T)
     glRotatef(90, 1, 0, 0)  # Rotaciona para ficar "em pé"
-    draw_elliptical_cylinder(a=0.8, b=0.35, height=0.08, color=seat_color)
+    draw_elliptical_cylinder(a=0.6/2, b=0.7/2, height=0.08, color=seat_color)
     glPopMatrix()
 
 
     # Suporte cadeira
-    for x in [-0.33, 0.33]:
+    for x in [-0.2, 0.2]:
         glPushMatrix()
-        glMultMatrixf(translation_matrix(x + pos_x, 0.5 + pos_y, 0.4 + pos_z).T)
+        glMultMatrixf(translation_matrix(x + pos_x, 0.5 + pos_y, 0.4 + pos_z - 0.13).T)
         draw_elliptical_cylinder(a=0.03, b=0.03, height=0.5, color=support_color)
         glPopMatrix()
     # Pernas da cadeira
-    for x in [-0.3, 0.3]:
-        for z in [-0.3, 0.3]:
+    for x in [-0.2, 0.2]:
+        for z in [-0.2, 0.2]:
             glPushMatrix()
             glMultMatrixf(translation_matrix(x + pos_x, -0.0 + pos_y, z + pos_z).T)
-            draw_elliptical_cylinder(a=0.07, b=0.07, height=0.5, color=support_color)
-            
+            draw_elliptical_cylinder(a=0.07/2, b=0.07/2, height=0.5, color=support_color)
             glPopMatrix()
