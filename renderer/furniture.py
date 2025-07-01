@@ -162,8 +162,8 @@ def draw_tables():
 
 def draw_board():
     glPushMatrix()
-    glMultMatrixf(translation_matrix(0, 2.5, -12.4).T)
-    draw_cuboid((4, 2, 0.1), (1, 1, 1, 1), 10)
+    glMultMatrixf(translation_matrix(3.5, 2.5, -12.4).T)
+    draw_cuboid((5.5, 4, 0.1), (1, 1, 1, 1), 10)
 
     glDisable(GL_LIGHTING)
     glColor3f(0.1, 0.1, 0.1)

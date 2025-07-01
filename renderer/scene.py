@@ -51,15 +51,15 @@ def draw_scene(camera, projection_mode):
     # Piso
     floor_color = (0.7, 0.7, 0.6, 1.0)
     glPushMatrix()
-    glMultMatrixf(translation_matrix(0, -0.05, 0).T)
-    draw_tessellated_cuboid((20, 0.1, 25), floor_color, 32.0, (5, 1, 5))
+    glMultMatrixf(translation_matrix(3.5, -0.05, 0).T)
+    draw_tessellated_cuboid((13, 0.1, 25), floor_color, 32.0, (5, 1, 5))
     glPopMatrix()
     
     # Parede do fundo
     wall_color = (0.9, 0.9, 0.85, 1.0)
     glPushMatrix()
-    glMultMatrixf(translation_matrix(0, 2.5, -12.5).T)
-    draw_cuboid((20, 5, 0.1), wall_color)
+    glMultMatrixf(translation_matrix(3.5, 2.5, -12.5).T)
+    draw_cuboid((13, 5, 0.1), wall_color)
     glPopMatrix()
 
     # Parede da direita
@@ -71,8 +71,8 @@ def draw_scene(camera, projection_mode):
     # Teto
     ceiling_color = (0.95, 0.95, 1.0, 1.0)
     glPushMatrix()
-    glMultMatrixf(translation_matrix(0, 5.05, 0).T)
-    draw_tessellated_cuboid((20, 0.1, 25), ceiling_color, 10.0, (5, 1, 5))
+    glMultMatrixf(translation_matrix(3.5, 5.05, 0).T)
+    draw_tessellated_cuboid((13, 0.1, 25), ceiling_color, 10.0, (5, 1, 5))
     glPopMatrix()
 
     # Parede com janelas

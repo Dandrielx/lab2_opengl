@@ -19,16 +19,6 @@ def draw_tessellated_quad(width, height, divs_x, divs_y):
             glVertex3f(x0, y1, 0)
     glEnd()
 
-#def draw_tessellated_cuboid(size, color, shininess, divisions):
-    #w, h, d = size
-    #divs_x, divs_y, divs_z = divisions
-    #set_material([c * 0.4 for c in color[:3]], color, [1, 1, 1, 1], shininess)
-    #glPushMatrix(); glTranslatef(0, 0, d / 2); draw_tessellated_quad(w, h, divs_x, divs_y); glPopMatrix()
-    #glPushMatrix(); glTranslatef(0, 0, -d / 2); glRotatef(180, 0, 1, 0); draw_tessellated_quad(w, h, divs_x, divs_y); glPopMatrix()
-    #glPushMatrix(); glTranslatef(-w / 2, 0, 0); glRotatef(-90, 0, 1, 0); draw_tessellated_quad(d, h, divs_z, divs_y); glPopMatrix()
-    #glPushMatrix(); glTranslatef(w / 2, 0, 0); glRotatef(90, 0, 1, 0); draw_tessellated_quad(d, h, divs_z, divs_y); glPopMatrix()
-    #glPushMatrix(); glTranslatef(0, h / 2, 0); glRotatef(-90, 1, 0, 0); draw_tessellated_quad(w, d, divs_x, divs_z); glPopMatrix()
-    #glPushMatrix(); glTranslatef(0, -h / 2, 0); glRotatef(90, 1, 0, 0); draw_tessellated_quad(w, d, divs_x, divs_z); glPopMatrix()
 
 def draw_tessellated_cuboid(size, color, shininess, divisions):
     w, h, d = size

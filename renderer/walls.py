@@ -6,7 +6,7 @@ def draw_window_wall():
     wall_color = (0.9, 0.9, 0.85, 1.0)
     window_height = 3.0
     window_base_y = 1.0
-    wall_x = -10.0
+    wall_x = -3.0
 
     # Parte de baixo da parede
     glPushMatrix()
