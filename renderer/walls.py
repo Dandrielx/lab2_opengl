@@ -3,24 +3,28 @@ from matrices import translation_matrix
 from utils.materials import draw_cuboid
 
 def draw_window_wall():
+    """
+    Função para renderizar a parede esquerda da sala, a qual
+    comporta as janelas.
+    """
     wall_color = (0.9, 0.9, 0.85, 1.0)
     window_height = 3.0
     window_base_y = 1.0
     wall_x = -3.0
 
-    # Parte de baixo da parede
+    # --- PARTE DE BAIXO DA PAREDE ---
     glPushMatrix()
     glMultMatrixf(translation_matrix(wall_x, window_base_y / 2, 0).T)
     draw_cuboid((0.2, window_base_y, 25), wall_color)
     glPopMatrix()
 
-    # Parte de cima da parede
+    # --- PARTE DE CIMA DA PAREDE ---
     glPushMatrix()
     glMultMatrixf(translation_matrix(wall_x, window_base_y + window_height + (5.0 - window_base_y - window_height) / 2, 0).T)
     draw_cuboid((0.2, 5.0 - window_base_y - window_height, 25), wall_color)
     glPopMatrix()
 
-    # Pilares entre as janelas
+    # --- PILARES ENTRE AS JANELAS ---
     pillars = [{'z_pos': -3.0, 'width': 2}, {'z_pos': 4.0, 'width': 2}, {'z_pos': -11.5, 'width': 2}, {'z_pos': 11.5, 'width': 2}]
     for p in pillars:
         glPushMatrix()
@@ -28,7 +32,7 @@ def draw_window_wall():
         draw_cuboid((0.2, window_height, p['width']), wall_color)
         glPopMatrix()
 
-    # Vidros das janelas (com transparência)
+    # --- VIDROS DAS JANELAS ---
     glEnable(GL_BLEND)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
     glass_color = [0.8, 0.9, 1.0, 0.3]
