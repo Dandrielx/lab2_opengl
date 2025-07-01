@@ -81,13 +81,5 @@ def draw_scene(camera, projection_mode):
     # Mesas
     draw_tables()
 
-    for row in range(-4, 12, 4):
-        for col in range(-4, 16, 4):
-            glPushMatrix()
-            glMultMatrixf(translation_matrix(row, 0, col-2.5).T)
-            glMultMatrixf(rotation_y(180).T)
-            draw_chair()
-            glPopMatrix()
-
     # Quadro branco com linha
     draw_board()

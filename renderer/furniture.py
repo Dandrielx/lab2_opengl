@@ -48,6 +48,9 @@ def draw_tables():
                 draw_cuboid((0.08, 0.38, 0.3), leg_color)
                 glPopMatrix()
 
+                if pos < 3:
+                    draw_chair(pos + 1, -1, 1.2)
+
             glPushMatrix()
             final_mat = np.dot(translation_matrix(0, -0.1, -0.35), rotation_y(90))
             glMultMatrixf(final_mat.T)
@@ -131,6 +134,8 @@ def draw_tables():
                     draw_cuboid((0.08, 0.38, 0.3), leg_color)
                     glPopMatrix()
 
+                    draw_chair(pos + 0.8, -1, 1.2)
+
             glPushMatrix()
             final_mat = np.dot(translation_matrix(-0.25, -0.1, -0.35), rotation_y(90))
             glMultMatrixf(final_mat.T)
@@ -174,19 +179,19 @@ def draw_board():
     glEnable(GL_LIGHTING)
     glPopMatrix()
 
-def draw_chair():
+def draw_chair(pos_x = 0, pos_y = 0, pos_z = 0):
     seat_color = (0.1, 0.1, 0.1, 1.0)
     support_color = (0 , 0, 0, 1.0)
 
     # Assento elíptico (horizontal)
     glPushMatrix()
-    glMultMatrixf(translation_matrix(0, 0.5, 0).T)
+    glMultMatrixf(translation_matrix(0 + pos_x, 0.5 + pos_y, 0 + pos_z).T)
     draw_elliptical_cylinder(a=0.8, b=0.5, height=0.1, color=seat_color)
     glPopMatrix()
 
     # Encosto elíptico (vertical, atrás)
     glPushMatrix()
-    glMultMatrixf(translation_matrix(0, 1.3, -0.45).T)
+    glMultMatrixf(translation_matrix(0 + pos_x, 1.3 + pos_y, 0.4 + pos_z).T)
     glRotatef(90, 1, 0, 0)  # Rotaciona para ficar "em pé"
     draw_elliptical_cylinder(a=0.8, b=0.35, height=0.08, color=seat_color)
     glPopMatrix()
@@ -195,14 +200,14 @@ def draw_chair():
     # Suporte cadeira
     for x in [-0.33, 0.33]:
         glPushMatrix()
-        glMultMatrixf(translation_matrix(x, 0.5, -0.4).T)
+        glMultMatrixf(translation_matrix(x + pos_x, 0.5 + pos_y, 0.4 + pos_z).T)
         draw_elliptical_cylinder(a=0.03, b=0.03, height=0.5, color=support_color)
         glPopMatrix()
     # Pernas da cadeira
     for x in [-0.3, 0.3]:
         for z in [-0.3, 0.3]:
             glPushMatrix()
-            glMultMatrixf(translation_matrix(x, -0.0, z).T)
+            glMultMatrixf(translation_matrix(x + pos_x, -0.0 + pos_y, z + pos_z).T)
             draw_elliptical_cylinder(a=0.07, b=0.07, height=0.5, color=support_color)
             
             glPopMatrix()
